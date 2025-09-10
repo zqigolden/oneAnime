@@ -23,8 +23,8 @@ void main() async {
       size: isLowResolution ? const Size(800, 540) : const Size(1280, 800),
       center: true,
       skipTaskbar: false,
-      windowButtonVisibility: false,
-      titleBarStyle: TitleBarStyle.hidden,
+      windowButtonVisibility: true,
+      titleBarStyle: TitleBarStyle.normal,
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
