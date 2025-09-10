@@ -1,0 +1,75 @@
+---
+name: "Build ARM macOS"
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'lib/**'
+      - 'macos/**'
+      - 'pubspec.yaml'
+      - '.github/workflows/build-macos-arm.yaml'
+
+jobs:
+  flutter-build-macos-arm:
+    name: "Build ARM macOS"
+    runs-on: "macos-14"  # macOS 14 runs on Apple Silicon (ARM64)
+    permissions: write-all
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+        
+      - name: Extract branch/tag name
+        run: |
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            echo "ref_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          else
+            echo "ref_name=manual-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
+          fi
+        shell: bash
+        
+      - name: Echo build progress
+        run: echo "Building oneAnime_macos_arm64_${{ env.ref_name }}.dmg"
+        
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+          
+      - name: Get Flutter dependencies
+        run: flutter pub get
+        
+      - name: Inject DanDan API Credentials
+        run: |
+          sed -i '' "s/kvpx7qkqjh/${{ secrets.DANDANAPI_APPID }}/g" lib/utils/mortis.dart
+          sed -i '' "s/rABUaBLqdz7aCSi3fe88ZDj2gwga9Vax/${{ secrets.DANDANAPI_KEY }}/g" lib/utils/mortis.dart
+        
+      - name: Build Flutter macOS (ARM64)
+        run: |
+          flutter build macos --release --target-platform=darwin-arm64
+          
+      - name: Verify architecture
+        run: |
+          file build/macos/Build/Products/Release/oneanime.app/Contents/MacOS/oneanime
+          lipo -info build/macos/Build/Products/Release/oneanime.app/Contents/MacOS/oneanime
+          
+      - name: Create DMG
+        run: |
+          hdiutil create -format UDZO -srcfolder build/macos/Build/Products/Release/oneanime.app -volname "oneAnime ARM64" oneAnime_macos_arm64_${{ env.ref_name }}.dmg
+          
+      - name: Upload macOS ARM64 build
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos_arm64_build
+          path: oneAnime_macos_arm64_*.dmg
+          retention-days: 30
