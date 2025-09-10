@@ -7,6 +7,9 @@ class MainFlutterWindow: NSWindow {
     let windowFrame = self.frame
     self.contentViewController = flutterViewController
     self.setFrame(windowFrame, display: true)
+    
+    // Enable full screen support
+    self.collectionBehavior = [.fullScreenPrimary]
 
     RegisterGeneratedPlugins(registry: flutterViewController)
 
