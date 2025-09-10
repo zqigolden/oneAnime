@@ -55,8 +55,7 @@ jobs:
           sed -i '' "s/rABUaBLqdz7aCSi3fe88ZDj2gwga9Vax/${{ secrets.DANDANAPI_KEY }}/g" lib/utils/mortis.dart
         
       - name: Build Flutter macOS (ARM64)
-        run: |
-          flutter build macos --release --target-platform=darwin-arm64
+        run: flutter build macos --release
           
       - name: Verify architecture
         run: |
