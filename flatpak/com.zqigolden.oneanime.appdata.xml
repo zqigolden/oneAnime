@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.zqigolden.oneanime</id>
+
+  <name>OneAnime</name>
+  <summary>Watch and manage anime collections</summary>
+
+  <description>
+    <p>
+      OneAnime is a clean and ad-free anime streaming application built with Flutter.
+      It follows Material You design guidelines and provides a seamless experience for watching anime.
+    </p>
+    <p>Features include:</p>
+    <ul>
+      <li>Anime catalog browsing</li>
+      <li>Search functionality</li>
+      <li>Episode scheduling</li>
+      <li>Video player with hardware acceleration</li>
+      <li>Danmaku (bullet comments) support</li>
+      <li>Watch list management</li>
+      <li>Multiple playback speeds</li>
+      <li>Dark/Light theme support</li>
+    </ul>
+  </description>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main interface</caption>
+      <!-- Replace with actual screenshot URL -->
+      <image>https://github.com/Predidit/oneAnime/raw/main/assets/images/logo/logo_rounded.png</image>
+    </screenshot>
+  </screenshots>
+
+  <url type="homepage">https://github.com/Predidit/oneAnime</url>
+  <url type="bugtracker">https://github.com/Predidit/oneAnime/issues</url>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0</project_license>
+
+  <developer_name>Predidit</developer_name>
+
+  <categories>
+    <category>AudioVideo</category>
+    <category>Player</category>
+    <category>Video</category>
+  </categories>
+
+  <keywords>
+    <keyword>anime</keyword>
+    <keyword>video</keyword>
+    <keyword>streaming</keyword>
+    <keyword>player</keyword>
+  </keywords>
+
+  <releases>
+    <release version="1.4.1" date="2024-09-25">
+      <description>
+        <p>Latest stable release with improved Linux support</p>
+      </description>
+    </release>
+  </releases>
+
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">mild</content_attribute>
+    <content_attribute id="language-profanity">mild</content_attribute>
+  </content_rating>
+
+</component>

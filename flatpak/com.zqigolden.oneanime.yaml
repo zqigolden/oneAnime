@@ -1,0 +1,69 @@
+app-id: com.zqigolden.oneanime
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: oneanime
+separate-locales: false
+
+finish-args:
+  # Network access for streaming
+  - --share=network
+
+  # IPC for communication between processes
+  - --share=ipc
+
+  # Display access
+  - --socket=x11
+  - --socket=wayland
+
+  # Audio access
+  - --socket=pulseaudio
+
+  # Hardware acceleration for video decoding
+  - --device=dri
+
+  # File system access for downloads and cache
+  - --filesystem=xdg-download
+  - --filesystem=xdg-cache
+  - --filesystem=xdg-config/oneanime:create
+  - --filesystem=xdg-data/oneanime:create
+
+  # System theme access
+  - --env=GTK_THEME
+  - --env=ICON_THEME
+
+  # For proper system integration
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.kde.StatusNotifierWatcher
+
+modules:
+  - name: oneanime
+    buildsystem: simple
+    build-commands:
+      # Install main executable
+      - install -Dm755 usr/bin/oneanime /app/bin/oneanime
+
+      # Install all bundled libraries
+      - cp -r usr/bin/lib /app/lib
+      - cp -r usr/bin/data /app/share
+
+      # Install desktop file
+      - install -Dm644 usr/share/applications/com.zqigolden.oneanime.desktop /app/share/applications/com.zqigolden.oneanime.desktop
+
+      # Install icons (multiple sizes for better integration)
+      - install -Dm644 usr/share/icons/hicolor/256x256/apps/com.zqigolden.oneanime.png /app/share/icons/hicolor/256x256/apps/com.zqigolden.oneanime.png
+      - install -Dm644 usr/share/icons/hicolor/256x256/apps/com.zqigolden.oneanime.png /app/share/icons/hicolor/128x128/apps/com.zqigolden.oneanime.png
+      - install -Dm644 usr/share/icons/hicolor/256x256/apps/com.zqigolden.oneanime.png /app/share/icons/hicolor/64x64/apps/com.zqigolden.oneanime.png
+
+      # Install AppStream metadata for app stores
+      - install -Dm644 com.zqigolden.oneanime.appdata.xml /app/share/appdata/com.zqigolden.oneanime.appdata.xml
+
+    sources:
+      - type: archive
+        url: https://github.com/YOUR_USERNAME/oneAnime/releases/download/v1.4.1/linux_appimage_structure.zip
+        sha256: a56d73e9bbc4ca9db31c48d1f0e2df62d5546ebcca72a8796eafc7ef3112cfa0
+        # Note: Replace with actual download URL and correct SHA256 hash
+
+      # Alternative: use local directory during development
+      # - type: dir
+      #   path: ./AppDir
