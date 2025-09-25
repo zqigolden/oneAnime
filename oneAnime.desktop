@@ -2,7 +2,8 @@
 Name=OneAnime
 Comment=Watch and manage anime collections
 Exec=oneanime
-Icon=icon
+Icon=com.zqigolden.oneanime
 Terminal=false
 Type=Application
 Categories=AudioVideo;Player;Video;
+StartupWMClass=oneanime
